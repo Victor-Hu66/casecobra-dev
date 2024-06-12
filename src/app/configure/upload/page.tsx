@@ -1,6 +1,7 @@
-"use client"
+"use client";
 
 import { cn } from "@/lib/utils";
+import { Image, Loader2, MousePointerSquareDashed } from "lucide-react";
 import { useState } from "react";
 import Dropzone, { FileRejection } from "react-dropzone";
 
@@ -9,6 +10,8 @@ const Page = () => {
 
   const onDropRejected = () => {};
   const onDropAccepted = () => {};
+
+  const isUploading = false;
 
   return (
     <div
@@ -29,16 +32,25 @@ const Page = () => {
           onDragEnter={() => setIsDragOver(true)}
           onDragLeave={() => setIsDragOver(false)}
         >
-            {({getRootProps, getInputProps}) => (
-                <div className="h-full w-full flex-1 flex flex-col items-center justify-center" {...getRootProps()}>
-                    <input {...getInputProps()}/> asa
-                </div>
-            )}
+          {({ getRootProps, getInputProps }) => (
+            <div
+              className="h-full w-full flex-1 flex flex-col items-center justify-center"
+              {...getRootProps()}
+            >
+              <input {...getInputProps()} />
+              {isDragOver ? (
+                <MousePointerSquareDashed className="h-6 w-6 text-zinc-500 mb-2" />
+              ) : isUploading ? (
+                <Loader2 className="animate-spin h-6 w-6 text-zinc-500 mb-2" />
+              ) : (
+                <Image className="h-6 w-6 text-zinc-500 mb-2" />
+              )}
+            </div>
+          )}
         </Dropzone>
       </div>
     </div>
   );
 };
 
-
-export default Page
+export default Page;
